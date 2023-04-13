@@ -57,17 +57,18 @@ stages:
                 secretType: 'dockerRegistry'
                 secretName: '$(imagePullSecret)'
                 dockerRegistryEndpoint: 'Container Registry Connection'
-          - task: KubernetesManifest@1
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
             inputs:
-              action: 'deploy'
-              connectionType: 'kubernetesServiceConnection'
-              kubernetesServiceConnection: 'kube cluster connection'
+              action: deploy
+              kubernetesServiceConnection: 'Kubernetes Cluster Connection'
               namespace: 'default'
-              manifests:  
-                mslearn-tailspin-spacegame-web-kubernetes/manifests/deployment.yml
-                mslearn-tailspin-spacegame-web-kubernetes/manifests/service.yml
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
               containers: |
                 $(RegistryName)/$(webRepository):$(tag)
                 $(RegistryName)/$(leaderboardRepository):$(tag)
-              imagePullSecrets: '$(imagePullSecret)'
 
