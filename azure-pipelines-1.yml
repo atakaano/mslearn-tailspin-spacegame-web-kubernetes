@@ -64,7 +64,6 @@ stages:
             inputs:
               action: 'deploy'
               kubernetesServiceConnection: 'kube cluster connection'
-              namespace: 'default'
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
@@ -72,3 +71,4 @@ stages:
                 $(RegistryName)/$(webRepository):$(tag)
                 $(RegistryName)/$(leaderboardRepository):$(tag)
               imagePullSecrets: '$(imagePullSecret)'
+              namespace: 'default'
