@@ -64,8 +64,8 @@ stages:
               kubernetesServiceConnection: 'kube cluster connection'
               namespace: 'default'
               manifests:  
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                mslearn-tailspin-spacegame-web-kubernetes/manifests/deployment.yml
+                mslearn-tailspin-spacegame-web-kubernetes/manifests/service.yml
               containers: |
                 $(RegistryName)/$(webRepository):$(tag)
                 $(RegistryName)/$(leaderboardRepository):$(tag)
