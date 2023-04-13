@@ -62,14 +62,13 @@ stages:
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
-              action: deploy
-              kubernetesServiceConnection: 'Kubernetes Cluster Connection'
+              action: 'deploy'
+              kubernetesServiceConnection: 'kube cluster connection'
               namespace: 'default'
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
-              imagePullSecrets: |
-                $(imagePullSecret)
               containers: |
                 $(RegistryName)/$(webRepository):$(tag)
                 $(RegistryName)/$(leaderboardRepository):$(tag)
+              imagePullSecrets: '$(imagePullSecret)'
